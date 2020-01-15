@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 window = Tk()
 window.title('hello app')
@@ -12,22 +13,28 @@ def lab():
     roll.grid(column=0,row=3)
     sem = Label(window, text='Semester')
     sem.grid(column=0,row=4)
-    
+
+def only_numbers(char):
+    return char.isdigit()
+
+validation = window.register(only_numbers)
 name_box = Entry()
 name_box.grid(column=1,row=1)
-age_box = Entry()
+age_box = Entry(window,validate="key", validatecommand=(validation, '%S'))
 age_box.grid(column=1,row=2)
-roll_box = Entry()
+roll_box = Entry(window,validate="key", validatecommand=(validation, '%S'))
 roll_box.grid(column=1,row=3)
 sem_box = Entry()
 sem_box.grid(column=1,row=4)
     
+
 def onclick():
     a = str(name_box.get()) + ',' + str(age_box.get()) + ',' + str(roll_box.get()) + ',' + str(sem_box.get())
     print(a)
     f = open("file.csv","a+")
     f.write(a)
     f.close()
+    messagebox.showinfo('sucess','successfully submitted!!!')
 
 def clear_box():
     name_box.delete(0 , END)
